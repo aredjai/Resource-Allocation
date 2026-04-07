@@ -228,7 +228,7 @@ export function ResourceManagement({ resources, pods, onSave, onClose }: Resourc
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-3xl font-black text-slate-800 tracking-tighter">Resource Intelligence</h2>
+          <h2 className="text-3xl font-black text-slate-800 tracking-tighter">Capacity & Bench Strength Guardian</h2>
           <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Manual Data Entry & Optimization</p>
         </div>
         <button 

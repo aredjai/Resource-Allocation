@@ -1,5 +1,5 @@
 {
-  "name": "Resource Availability Dashboard",
-  "description": "A comprehensive visualization of resource commitment and availability for EDE and APD teams across Q3 and Q4 2026.",
+  "name": "CapGuard",
+  "description": "Capacity & Bench Strength Guardian - A comprehensive visualization of resource commitment and availability.",
   "requestFramePermissions": []
 }

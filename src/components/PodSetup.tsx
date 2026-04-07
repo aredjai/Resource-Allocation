@@ -10,11 +10,12 @@ function cn(...inputs: ClassValue[]) {
 
 interface PodSetupProps {
   pods: POD[];
-  onSave: (updatedPods: POD[]) => void;
+  onSave: (updatedPods: POD[]) => void | Promise<void>;
   onClose: () => void;
+  showNotification?: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-export const PodSetup: React.FC<PodSetupProps> = ({ pods, onSave, onClose }) => {
+export const PodSetup: React.FC<PodSetupProps> = ({ pods, onSave, onClose, showNotification }) => {
   const [localPods, setLocalPods] = useState<POD[]>(pods);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newPod, setNewPod] = useState<Partial<POD>>({
@@ -44,16 +45,16 @@ export const PodSetup: React.FC<PodSetupProps> = ({ pods, onSave, onClose }) => 
 
   const handleDeletePod = (id: string) => {
     if (id === 'pod-bench') {
-      alert("Cannot delete the Bench POD.");
+      if (showNotification) showNotification("Cannot delete the Bench POD.", "error");
       return;
     }
-    if (window.confirm("Are you sure you want to delete this POD? Resources assigned to it will need to be re-assigned.")) {
-      setLocalPods(localPods.filter(p => p.id !== id));
-    }
+    // Removing window.confirm as it's not reliable in iframe
+    setLocalPods(localPods.filter(p => p.id !== id));
+    if (showNotification) showNotification("POD removed from local list. Save changes to persist.", "info");
   };
 
-  const handleFinalSave = () => {
-    onSave(localPods);
+  const handleFinalSave = async () => {
+    await onSave(localPods);
     onClose();
   };
 

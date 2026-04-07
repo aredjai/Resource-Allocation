@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   BarChart,
   Bar,
@@ -47,6 +47,7 @@ import {
   Settings
 } from 'lucide-react';
 import { RESOURCES as INITIAL_RESOURCES, PROJECTS as INITIAL_PROJECTS, SPRINTS, PODS as INITIAL_PODS, QUARTERS, Resource, POD, Quarter } from './data';
+import { supabaseService } from './services/supabaseService';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -56,7 +57,7 @@ function cn(...inputs: ClassValue[]) {
 
 export default function App() {
   const [view, setView] = useState<'pod' | 'department' | 'resource' | 'allocation-details'>('pod');
-  const [selectedQuarterIds, setSelectedQuarterIds] = useState<string[]>(QUARTERS.map(q => q.id));
+  const [selectedQuarterIds, setSelectedQuarterIds] = useState<string[]>(['2026-Q2', '2026-Q3', '2026-Q4']);
   const [selectedBU, setSelectedBU] = useState<string>('All');
   
   // Dynamic Data State
@@ -64,6 +65,44 @@ export default function App() {
   const [pods, setPods] = useState<POD[]>(INITIAL_PODS);
   const [isUploading, setIsUploading] = useState(false);
   const [isPodSetupOpen, setIsPodSetupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load data from Supabase on mount
+  useEffect(() => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('placeholder')) {
+      showNotification("Supabase credentials missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Settings.", "error");
+    }
+
+    const loadData = async () => {
+      try {
+        const [dbPods, dbResources] = await Promise.all([
+          supabaseService.fetchPods(),
+          supabaseService.fetchResources()
+        ]);
+        
+        if (dbPods.length > 0) {
+          setPods(dbPods);
+          setResources(dbResources);
+          console.log("Data loaded from Supabase successfully.");
+        } else {
+          console.log("No data found in Supabase, using local defaults.");
+          setPods(INITIAL_PODS);
+          setResources(INITIAL_RESOURCES);
+        }
+      } catch (error) {
+        console.error("Failed to load data from Supabase:", error);
+        showNotification("Failed to connect to database. Using local defaults.", "error");
+        setPods(INITIAL_PODS);
+        setResources(INITIAL_RESOURCES);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   // Filtered Resources based on BU
   const filteredResources = useMemo(() => {
@@ -83,11 +122,29 @@ export default function App() {
     return pods.filter(p => p.bu === selectedBU);
   }, [pods, selectedBU]);
 
-  const resetToSeedData = () => {
-    setResources(INITIAL_RESOURCES);
-    setPods(INITIAL_PODS);
-    setSelectedBU('All');
-    alert("Seed data restored for demo purposes.");
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000);
+  };
+
+  const resetToSeedData = async () => {
+    console.log("Resetting to seed data...");
+    setIsLoading(true);
+    try {
+      await supabaseService.resetData(INITIAL_PODS, INITIAL_RESOURCES);
+      setResources(INITIAL_RESOURCES);
+      setPods(INITIAL_PODS);
+      setSelectedBU('All');
+      setSelectedQuarterIds(['2026-Q2', '2026-Q3', '2026-Q4']);
+      showNotification("Database reset to seed data successfully.", "success");
+    } catch (error) {
+      console.error("Reset error:", error);
+      showNotification("Failed to reset database. Check console for details.", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const selectedQuarters = useMemo(() => {
@@ -234,13 +291,26 @@ export default function App() {
 
         setPods(newPods);
         setResources(Array.from(resourcesMap.values()));
-        setIsUploading(false);
-        alert("Data imported successfully! Sprint-level allocations have been processed.");
+        
+        // Persist to Supabase
+        const persistImport = async () => {
+          try {
+            // Use resetData to clear existing data and replace with new data
+            await supabaseService.resetData(newPods, Array.from(resourcesMap.values()));
+            showNotification("Data imported and database replaced successfully!", "success");
+          } catch (error) {
+            console.error("Persistence error:", error);
+            showNotification("Data imported locally but failed to save to database.", "error");
+          } finally {
+            setIsUploading(false);
+          }
+        };
+        persistImport();
       },
       error: (error) => {
         console.error("CSV Parsing Error:", error);
         setIsUploading(false);
-        alert("Failed to parse CSV. Please ensure you are using the correct template.");
+        showNotification("Failed to parse CSV. Please ensure you are using the correct template.", "error");
       }
     });
   };
@@ -265,7 +335,7 @@ export default function App() {
           // Sprint-level logic
           const sprintSum = alloc.sprintAllocations
             .filter(sa => qSprints.some(qs => qs.id === sa.sprintId))
-            .reduce((sum, sa) => sum + sa.percentage, 0);
+            .reduce((sum, sa) => sum + (sa.percentage || 0), 0);
           return acc + (qSprints.length > 0 ? sprintSum / qSprints.length : 0);
         } else {
           // Legacy date-based logic
@@ -282,7 +352,8 @@ export default function App() {
       return qAcc + qAlloc;
     }, 0);
 
-    return totalAlloc / quarters.length;
+    const result = totalAlloc / quarters.length;
+    return isNaN(result) ? 0 : result;
   };
 
   // Helper to get specific project allocation averaged across selected quarters
@@ -298,7 +369,7 @@ export default function App() {
           if (alloc.sprintAllocations && alloc.sprintAllocations.length > 0) {
             const sprintSum = alloc.sprintAllocations
               .filter(sa => qSprints.some(qs => qs.id === sa.sprintId))
-              .reduce((sum, sa) => sum + sa.percentage, 0);
+              .reduce((sum, sa) => sum + (sa.percentage || 0), 0);
             return acc + (qSprints.length > 0 ? sprintSum / qSprints.length : 0);
           } else {
             const qStart = new Date(quarter.startDate).getTime();
@@ -314,7 +385,8 @@ export default function App() {
       return qAcc + qAlloc;
     }, 0);
 
-    return totalAlloc / quarters.length;
+    const result = totalAlloc / quarters.length;
+    return isNaN(result) ? 0 : result;
   };
 
   // Calculate POD metrics for selected period
@@ -335,13 +407,21 @@ export default function App() {
 
           // Calculate average allocation for these relevant projects across selected quarters
           const avgAlloc = selectedQuarters.length === 0 ? 0 : selectedQuarters.reduce((qAcc, quarter) => {
+            const qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
             const qStart = new Date(quarter.startDate).getTime();
             const qEnd = new Date(quarter.endDate).getTime();
             
             const qAlloc = relevantAllocations.reduce((acc, alloc) => {
-              const aStart = new Date(alloc.startDate).getTime();
-              const aEnd = new Date(alloc.endDate).getTime();
-              if (aStart <= qEnd && aEnd >= qStart) return acc + alloc.percentage;
+              if (alloc.sprintAllocations && alloc.sprintAllocations.length > 0) {
+                const sprintSum = alloc.sprintAllocations
+                  .filter(sa => qSprints.some(qs => qs.id === sa.sprintId))
+                  .reduce((sum, sa) => sum + sa.percentage, 0);
+                return acc + (qSprints.length > 0 ? sprintSum / qSprints.length : 0);
+              } else {
+                const aStart = new Date(alloc.startDate || '').getTime();
+                const aEnd = new Date(alloc.endDate || '').getTime();
+                if (aStart <= qEnd && aEnd >= qStart) return acc + (alloc.percentage || 0);
+              }
               return acc;
             }, 0);
             
@@ -357,9 +437,9 @@ export default function App() {
 
       return {
         ...pod,
-        fte: parseFloat(totalFTE.toFixed(2)),
+        fte: isNaN(totalFTE) ? 0 : parseFloat(totalFTE.toFixed(2)),
         headcount: uniqueResources.size,
-        utilization: pod.id === 'pod-bench' ? 0 : Math.min(100, Math.round((totalFTE / (uniqueResources.size || 1)) * 100)),
+        utilization: pod.id === 'pod-bench' ? 0 : Math.min(100, Math.round(((isNaN(totalFTE) ? 0 : totalFTE) / (uniqueResources.size || 1)) * 100)),
         hasRisk: hasOverAllocatedResource
       };
     });
@@ -378,9 +458,9 @@ export default function App() {
 
     return {
       totalHeadcount,
-      allocatedFTE: parseFloat(totalAllocatedFTE.toFixed(1)),
-      benchFTE: parseFloat(benchFTE.toFixed(1)),
-      benchPct: Math.round(benchPct)
+      allocatedFTE: isNaN(totalAllocatedFTE) ? 0 : parseFloat(totalAllocatedFTE.toFixed(1)),
+      benchFTE: isNaN(benchFTE) ? 0 : parseFloat(benchFTE.toFixed(1)),
+      benchPct: isNaN(benchPct) ? 0 : Math.round(benchPct)
     };
   }, [selectedQuarters, filteredResources]);
 
@@ -391,15 +471,14 @@ export default function App() {
         const teamResources = team ? filteredResources.filter(r => r.department === team) : filteredResources;
         const totalHeadcount = teamResources.length;
         const totalAllocatedFTE = teamResources.reduce((acc, r) => {
-          const qPrefix = q.name.split(' ')[0];
-          const qSprints = SPRINTS.filter(s => s.quarter === qPrefix);
+          const qSprints = SPRINTS.filter(s => s.quarter === q.id);
           
           const alloc = r.allocations.reduce((aAcc, a) => {
             if (a.sprintAllocations && a.sprintAllocations.length > 0) {
               const sprintSum = a.sprintAllocations
                 .filter(sa => qSprints.some(qs => qs.id === sa.sprintId))
                 .reduce((sum, sa) => sum + sa.percentage, 0);
-              return aAcc + (sprintSum / qSprints.length);
+              return aAcc + (qSprints.length > 0 ? sprintSum / qSprints.length : 0);
             } else {
               const qStart = new Date(q.startDate).getTime();
               const qEnd = new Date(q.endDate).getTime();
@@ -411,7 +490,8 @@ export default function App() {
           }, 0);
           return acc + (alloc / 100);
         }, 0);
-        return parseFloat(Math.max(0, totalHeadcount - totalAllocatedFTE).toFixed(1));
+        const result = parseFloat(Math.max(0, totalHeadcount - (isNaN(totalAllocatedFTE) ? 0 : totalAllocatedFTE)).toFixed(1));
+        return isNaN(result) ? 0 : result;
       };
 
       return {
@@ -438,9 +518,9 @@ export default function App() {
       return {
         name: dept,
         total: totalFTE,
-        allocated: parseFloat(allocatedFTE.toFixed(1)),
-        bench: parseFloat((totalFTE - allocatedFTE).toFixed(1)),
-        utilization: totalFTE > 0 ? Math.round((allocatedFTE / totalFTE) * 100) : 0
+        allocated: isNaN(allocatedFTE) ? 0 : parseFloat(allocatedFTE.toFixed(1)),
+        bench: isNaN(totalFTE - allocatedFTE) ? 0 : parseFloat((totalFTE - allocatedFTE).toFixed(1)),
+        utilization: totalFTE > 0 ? Math.round(((isNaN(allocatedFTE) ? 0 : allocatedFTE) / totalFTE) * 100) : 0
       };
     });
   }, [selectedQuarters, resources]);
@@ -453,25 +533,21 @@ export default function App() {
     return teams.map(teamName => {
       const teamResources = resources.filter(r => r.department === teamName);
       const totalHeadcount = teamResources.length;
-      const allocatedFTE = teamResources.reduce((acc, r) => {
-        const alloc = getResourceAllocationInPeriod(r, selectedQuarters);
-        return acc + (alloc / 100);
-      }, 0);
+      const allocatedFTE = getResourceAllocationInPeriod({ allocations: teamResources.flatMap(r => r.allocations) } as any, selectedQuarters);
       
-      const benchFTE = Math.max(0, totalHeadcount - allocatedFTE);
+      const benchFTE = Math.max(0, totalHeadcount - (isNaN(allocatedFTE) ? 0 : allocatedFTE));
       
       // Find the best quarter for this team specifically
       const bestQuarter = selectedQuarters.map(q => {
-        const qPrefix = q.name.split(' ')[0];
-        const qSprints = SPRINTS.filter(s => s.quarter === qPrefix);
+        const qSprints = SPRINTS.filter(s => s.quarter === q.id);
         
         const qAlloc = teamResources.reduce((acc, r) => {
           const rAlloc = r.allocations.reduce((aAcc, a) => {
             if (a.sprintAllocations && a.sprintAllocations.length > 0) {
               const sprintSum = a.sprintAllocations
                 .filter(sa => qSprints.some(qs => qs.id === sa.sprintId))
-                .reduce((sum, sa) => sum + sa.percentage, 0);
-              return aAcc + (sprintSum / qSprints.length);
+                .reduce((sum, sa) => sum + (sa.percentage || 0), 0);
+              return aAcc + (qSprints.length > 0 ? sprintSum / qSprints.length : 0);
             } else {
               const qStart = new Date(q.startDate).getTime();
               const qEnd = new Date(q.endDate).getTime();
@@ -488,13 +564,13 @@ export default function App() {
 
       return {
         team: teamName,
-        avgBenchFte: parseFloat(benchFTE.toFixed(1)),
-        benchPct: totalHeadcount > 0 ? Math.round((benchFTE / totalHeadcount) * 100) : 0,
+        avgBenchFte: isNaN(benchFTE) ? 0 : parseFloat(benchFTE.toFixed(1)),
+        benchPct: totalHeadcount > 0 ? Math.round(((isNaN(benchFTE) ? 0 : benchFTE) / totalHeadcount) * 100) : 0,
         bestQuarter: bestQuarter?.name || 'N/A',
-        bestQuarterBench: bestQuarter ? parseFloat(bestQuarter.bench.toFixed(1)) : 0
+        bestQuarterBench: bestQuarter ? parseFloat((isNaN(bestQuarter.bench) ? 0 : bestQuarter.bench).toFixed(1)) : 0
       };
     });
-  }, [selectedQuarters, filteredResources]);
+  }, [selectedQuarters, resources]);
 
   const topCapacityTeam = useMemo(() => 
     teamBenchMetrics.length > 0 ? [...teamBenchMetrics].sort((a, b) => b.avgBenchFte - a.avgBenchFte)[0] : null
@@ -585,14 +661,31 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-800 font-sans selection:bg-indigo-100 selection:text-indigo-900">
+      {/* Notifications */}
+      {notification && (
+        <div className={cn(
+          "fixed top-4 right-4 z-[200] px-6 py-3 rounded-xl shadow-2xl border animate-in fade-in slide-in-from-top-4 duration-300",
+          notification.type === 'success' ? "bg-emerald-50 border-emerald-200 text-emerald-800" :
+          notification.type === 'error' ? "bg-rose-50 border-rose-200 text-rose-800" :
+          "bg-indigo-50 border-indigo-200 text-indigo-800"
+        )}>
+          <div className="flex items-center gap-3">
+            {notification.type === 'success' && <CheckCircle2 size={18} />}
+            {notification.type === 'error' && <AlertCircle size={18} />}
+            {notification.type === 'info' && <Activity size={18} />}
+            <span className="text-sm font-bold">{notification.message}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-8 py-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <div className="w-2 h-6 bg-indigo-500 rounded-full" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Resource Intelligence Platform</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Capacity & Bench Strength Guardian</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-800">POD & Bench Analysis</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">CapGuard</h1>
           <p className="text-sm text-slate-500 max-w-2xl">
             Strategic planning for <span className="text-indigo-600 font-semibold">"When can we start the next thing?"</span> and <span className="text-indigo-600 font-semibold">"Who is available?"</span>
           </p>
@@ -940,13 +1033,27 @@ export default function App() {
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px]" />
           
           <div className="relative z-10">
-            {view === 'allocation-details' ? (
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Loading Database...</p>
+              </div>
+            ) : view === 'allocation-details' ? (
               <AllocationDetails 
                 resources={resources}
                 pods={pods}
-                onSave={(updatedResources, updatedPods) => {
-                  setResources(updatedResources);
-                  setPods(updatedPods);
+                onSave={async (updatedResources, updatedPods) => {
+                  try {
+                    await Promise.all([
+                      supabaseService.saveResources(updatedResources),
+                      supabaseService.savePods(updatedPods)
+                    ]);
+                    setResources(updatedResources);
+                    setPods(updatedPods);
+                  } catch (error) {
+                    console.error("Save error:", error);
+                    alert("Failed to save changes to database. Please check your Supabase configuration.");
+                  }
                 }}
                 onClose={() => setView('pod')}
               />
@@ -1201,11 +1308,19 @@ export default function App() {
           <div className="w-full max-w-4xl animate-in fade-in zoom-in duration-200">
             <PodSetup 
               pods={pods}
-              onSave={(updatedPods) => {
-                setPods(updatedPods);
-                setIsPodSetupOpen(false);
+              onSave={async (updatedPods) => {
+                try {
+                  await supabaseService.savePods(updatedPods);
+                  setPods(updatedPods);
+                  setIsPodSetupOpen(false);
+                  showNotification("PODs updated successfully.", "success");
+                } catch (error) {
+                  console.error("Save error:", error);
+                  showNotification("Failed to save PODs to database.", "error");
+                }
               }}
               onClose={() => setIsPodSetupOpen(false)}
+              showNotification={showNotification}
             />
           </div>
         </div>
@@ -1214,7 +1329,7 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 px-8 py-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-          © 2026 Resource Intelligence Dashboard
+          © 2026 Capacity & Bench Strength Guardian
         </div>
         <div className="flex gap-8 text-[10px] font-bold uppercase text-slate-400">
           <a href="#" className="hover:text-indigo-600 transition-colors">Export Analytics</a>

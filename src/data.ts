@@ -56,348 +56,3589 @@ export interface POD {
 }
 
 export const PODS: POD[] = [
-  { id: 'pod-bench', name: 'Bench / Available', bu: 'IT', lead: 'N/A', description: 'Unallocated resource capacity' },
-  { id: 'pod-meridian-vk', name: 'Project Meridian', bu: 'IT', lead: 'Vijay Kashyap', description: 'Project Meridian Core Development' },
-  { id: 'pod-letter-conv', name: 'Letter Conversion & Print Vendor Implementation', bu: 'MSD', lead: 'Vijay Kashyap', description: 'MP and Covious Efforts' },
-  { id: 'pod-msd-maint', name: 'MSD Maintenance and Prod Support', bu: 'MSD', lead: 'Prahlad Kulkarni', description: 'Production support and optimization' },
-  { id: 'pod-mld-maint', name: 'MLD Maintenance and Prod Support', bu: 'MLD', lead: '', description: '' },
-  { id: 'pod-ent-maint', name: 'ENT Maintenance and Prod Support', bu: 'ENT', lead: '', description: '' },
-  { id: 'pod-genesys-mgmt', name: 'Genesys Contact Mgmt.', bu: 'MSD', lead: 'Vijay Kashyap', description: 'Genesys Contact Management Center' },
-  { id: 'pod-cdm-2', name: 'CDM 2.0', bu: 'MLD', lead: 'Vijay Kashyap', description: 'CDM 2.0 Setup' },
-  { id: 'pod-gnma-hecm', name: 'GNMA HECM', bu: 'IT', lead: 'Vijay Kashyap', description: 'GNMA HECM & Infrastructure Support' },
-  { id: 'pod-servicing-enh', name: 'Servicing Enhancements', bu: 'MSD', lead: 'N/A', description: 'Genesys & Investor Portal' },
-  { id: 'pod-meridian-js', name: 'Project Meridian POD', bu: 'IT', lead: 'Joshua Saunders', description: 'Project Meridian Core Development' },
-  { id: 'pod-reliance-int', name: 'Reliance First Cap Integration', bu: 'MSD', lead: 'Vijay Kashyap', description: 'RFC Efforts for Integration' },
-  { id: 'pod-digital-cr', name: 'Digital Change Request', bu: 'IT', lead: 'Brett Wilbur', description: 'DCR Product Development' },
-  { id: 'pod-ccm-support', name: 'CCM Support', bu: 'CCM', lead: 'Adam Dean', description: 'CCM Support' },
-  { id: 'pod-omni-enh', name: 'OMNI Enhancements', bu: 'MSD', lead: 'Behzad Kashefipour', description: 'Ongoing Enhancements to OMNI' },
-  { id: 'pod-imaging', name: 'Imaging Team', bu: 'MSD', lead: 'N/A', description: 'Imaging Team' },
-  { id: 'pod-raptor', name: 'Project Raptor', bu: 'MSD', lead: 'N/A', description: 'Servicing Business Acquisition' },
-  { id: 'pod-servicing-conv', name: 'Servicing System Conversion', bu: 'MSD', lead: 'N/A', description: 'Servicing System Migration' },
+  {
+    "id": "pod-cdm-2-0",
+    "name": "CDM 2.0",
+    "bu": "MLD",
+    "lead": "TBD",
+    "description": "CDM 2.0"
+  },
+  {
+    "id": "pod-reliance-first-cap-integration",
+    "name": "Reliance First Cap Integration",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Reliance First Cap Integration"
+  },
+  {
+    "id": "pod-dcr",
+    "name": "DCR",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "DCR"
+  },
+  {
+    "id": "pod-genesys-contact-mgmt-",
+    "name": "Genesys Contact Mgmt.",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Genesys Contact Mgmt."
+  },
+  {
+    "id": "pod-gnma-hecm",
+    "name": "GNMA HECM",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "GNMA HECM"
+  },
+  {
+    "id": "pod-investor-portal--s-mon-",
+    "name": "Investor Portal (S-MON)",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Investor Portal (S-MON)"
+  },
+  {
+    "id": "pod-meridian--cloud-",
+    "name": "Meridian (Cloud)",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "Meridian (Cloud)"
+  },
+  {
+    "id": "pod-letter-conversion---print-vendor-implementation",
+    "name": "Letter Conversion & Print Vendor Implementation",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "Letter Conversion & Print Vendor Implementation"
+  },
+  {
+    "id": "pod-ocr",
+    "name": "OCR",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "OCR"
+  },
+  {
+    "id": "pod-life-of-loan",
+    "name": "Life of Loan",
+    "bu": "MLD",
+    "lead": "TBD",
+    "description": "Life of Loan"
+  },
+  {
+    "id": "pod-treasury-optimization",
+    "name": "Treasury Optimization",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "Treasury Optimization"
+  },
+  {
+    "id": "pod-ai-voice-agents",
+    "name": "AI Voice Agents",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "AI Voice Agents"
+  },
+  {
+    "id": "pod-enhancements--msd-",
+    "name": "Enhancements (MSD)",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Enhancements (MSD)"
+  },
+  {
+    "id": "pod-enhancements--cx-",
+    "name": "Enhancements (CX)",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "Enhancements (CX)"
+  },
+  {
+    "id": "pod-enhancements--letters-",
+    "name": "Enhancements (Letters)",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Enhancements (Letters)"
+  },
+  {
+    "id": "pod-enhancements--crm-",
+    "name": "Enhancements (CRM)",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Enhancements (CRM)"
+  },
+  {
+    "id": "pod-ccm-support",
+    "name": "CCM Support",
+    "bu": "CCM",
+    "lead": "TBD",
+    "description": "CCM Support"
+  },
+  {
+    "id": "pod-production-support",
+    "name": "Production Support",
+    "bu": "IT",
+    "lead": "TBD",
+    "description": "Production Support"
+  },
+  {
+    "id": "pod-business-intelligence--lending-analytics-",
+    "name": "Business Intelligence (Lending Analytics)",
+    "bu": "MLD",
+    "lead": "TBD",
+    "description": "Business Intelligence (Lending Analytics)"
+  },
+  {
+    "id": "pod-business-intelligence--servicing-analytics-",
+    "name": "Business Intelligence (Servicing Analytics)",
+    "bu": "MSD",
+    "lead": "TBD",
+    "description": "Business Intelligence (Servicing Analytics)"
+  }
 ];
 
 export const PROJECTS: { id: string; name: string; podId: string }[] = [
-  { id: 'cdm-2.0', name: 'CDM 2.0 Migration', podId: 'pod-cdm-2' },
-  { id: 'reliance', name: 'Reliance', podId: 'pod-reliance-int' },
-  { id: 'dcr', name: 'Digital Change Request', podId: 'pod-digital-cr' },
-  { id: 'genesys', name: 'Genesys', podId: 'pod-genesys-mgmt' },
-  { id: 'gnma-hecm', name: 'GNMA HECM', podId: 'pod-gnma-hecm' },
-  { id: 'investor-portal', name: 'Investor Portal', podId: 'pod-servicing-enh' },
-  { id: 'mcdm', name: 'MCDM', podId: 'pod-gnma-hecm' },
-  { id: 'meridian', name: 'Project Meridian', podId: 'pod-meridian-js' },
-  { id: 'message-point', name: 'Message Point', podId: 'pod-letter-conv' },
-  { id: 'covius', name: 'Covius Setup', podId: 'pod-letter-conv' },
-  { id: 'performance', name: 'Performance Team', podId: 'pod-msd-maint' },
-  { id: 'imaging', name: 'Imaging Team', podId: 'pod-imaging' },
-  { id: 'sprint-general', name: 'Sprint (General)', podId: 'pod-bench' },
-  { id: 'sprint-cx', name: 'Sprint (CX)', podId: 'pod-bench' },
-  { id: 'sprint-letters', name: 'Sprint (Letters)', podId: 'pod-bench' },
-  { id: 'sprint-crm', name: 'Sprint (CRM)', podId: 'pod-bench' },
-  { id: 'ccm-support-proj', name: 'CCM Support', podId: 'pod-ccm-support' },
+  {
+    "id": "proj-cdm-2-0",
+    "name": "CDM 2.0",
+    "podId": "pod-cdm-2-0"
+  },
+  {
+    "id": "proj-reliance-first-cap-integration",
+    "name": "Reliance First Cap Integration",
+    "podId": "pod-reliance-first-cap-integration"
+  },
+  {
+    "id": "proj-dcr",
+    "name": "DCR",
+    "podId": "pod-dcr"
+  },
+  {
+    "id": "proj-genesys-contact-mgmt-",
+    "name": "Genesys Contact Mgmt.",
+    "podId": "pod-genesys-contact-mgmt-"
+  },
+  {
+    "id": "proj-gnma-hecm",
+    "name": "GNMA HECM",
+    "podId": "pod-gnma-hecm"
+  },
+  {
+    "id": "proj-investor-portal--s-mon-",
+    "name": "Investor Portal (S-MON)",
+    "podId": "pod-investor-portal--s-mon-"
+  },
+  {
+    "id": "proj-meridian--cloud-",
+    "name": "Meridian (Cloud)",
+    "podId": "pod-meridian--cloud-"
+  },
+  {
+    "id": "proj-letter-conversion---print-vendor-implementation",
+    "name": "Letter Conversion & Print Vendor Implementation",
+    "podId": "pod-letter-conversion---print-vendor-implementation"
+  },
+  {
+    "id": "proj-ocr",
+    "name": "OCR",
+    "podId": "pod-ocr"
+  },
+  {
+    "id": "proj-life-of-loan",
+    "name": "Life of Loan",
+    "podId": "pod-life-of-loan"
+  },
+  {
+    "id": "proj-treasury-optimization",
+    "name": "Treasury Optimization",
+    "podId": "pod-treasury-optimization"
+  },
+  {
+    "id": "proj-ai-voice-agents",
+    "name": "AI Voice Agents",
+    "podId": "pod-ai-voice-agents"
+  },
+  {
+    "id": "proj-enhancements--msd-",
+    "name": "Enhancements (MSD)",
+    "podId": "pod-enhancements--msd-"
+  },
+  {
+    "id": "proj-enhancements--cx-",
+    "name": "Enhancements (CX)",
+    "podId": "pod-enhancements--cx-"
+  },
+  {
+    "id": "proj-enhancements--letters-",
+    "name": "Enhancements (Letters)",
+    "podId": "pod-enhancements--letters-"
+  },
+  {
+    "id": "proj-enhancements--crm-",
+    "name": "Enhancements (CRM)",
+    "podId": "pod-enhancements--crm-"
+  },
+  {
+    "id": "proj-ccm-support",
+    "name": "CCM Support",
+    "podId": "pod-ccm-support"
+  },
+  {
+    "id": "proj-production-support",
+    "name": "Production Support",
+    "podId": "pod-production-support"
+  },
+  {
+    "id": "proj-business-intelligence--lending-analytics-",
+    "name": "Business Intelligence (Lending Analytics)",
+    "podId": "pod-business-intelligence--lending-analytics-"
+  },
+  {
+    "id": "proj-business-intelligence--servicing-analytics-",
+    "name": "Business Intelligence (Servicing Analytics)",
+    "podId": "pod-business-intelligence--servicing-analytics-"
+  }
 ];
 
 export const RESOURCES: Resource[] = [
   {
-    id: 'adam-dean',
-    name: 'Adam Dean',
-    department: 'EDE',
-    role: 'Support',
-    allocations: [
-      { projectId: 'ccm-support-proj', projectName: 'CCM Support', podId: 'pod-ccm-support', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'ccm-support-proj', projectName: 'CCM Support', podId: 'pod-ccm-support', percentage: 50, startDate: '2026-07-01', endDate: '2026-12-31' },
-      { projectId: 'sprint-general', projectName: 'Sprint (General)', podId: 'pod-bench', percentage: 50, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "naga-chadalwada",
+    "name": "Naga Chadalwada",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-cdm-2-0",
+        "projectName": "CDM 2.0",
+        "podId": "pod-cdm-2-0",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 50
+          }
+        ]
+      },
+      {
+        "projectId": "proj-cdm-2-0",
+        "projectName": "CDM 2.0",
+        "podId": "pod-cdm-2-0",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 50
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'amir-hama',
-    name: 'Amir Hama',
-    department: 'APD',
-    role: 'QA',
-    allocations: [
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 100, startDate: '2026-01-01', endDate: '2026-09-30' },
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 20, startDate: '2026-10-01', endDate: '2026-12-31' },
-      { projectId: 'sprint-crm', projectName: 'Sprint (CRM)', podId: 'pod-bench', percentage: 80, startDate: '2026-10-01', endDate: '2026-12-31' },
-    ],
+    "id": "dennis-grecu",
+    "name": "Dennis Grecu",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-cdm-2-0",
+        "projectName": "CDM 2.0",
+        "podId": "pod-cdm-2-0",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 5
+          }
+        ]
+      },
+      {
+        "projectId": "proj-genesys-contact-mgmt-",
+        "projectName": "Genesys Contact Mgmt.",
+        "podId": "pod-genesys-contact-mgmt-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 80
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 80
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 80
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 40
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 40
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 40
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 40
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 40
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 40
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'andrew-hofmann',
-    name: 'Andrew Hofmann',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'sprint-general', projectName: 'Sprint (General)', podId: 'pod-bench', percentage: 80, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'sprint-general', projectName: 'Sprint (General)', podId: 'pod-bench', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "randy-see",
+    "name": "Randy See",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-reliance-first-cap-integration",
+        "projectName": "Reliance First Cap Integration",
+        "podId": "pod-reliance-first-cap-integration",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 25
+          }
+        ]
+      },
+      {
+        "projectId": "proj-dcr",
+        "projectName": "DCR",
+        "podId": "pod-dcr",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 5
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 5
+          }
+        ]
+      },
+      {
+        "projectId": "proj-investor-portal--s-mon-",
+        "projectName": "Investor Portal (S-MON)",
+        "podId": "pod-investor-portal--s-mon-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 25
+          }
+        ]
+      },
+      {
+        "projectId": "proj-meridian--cloud-",
+        "projectName": "Meridian (Cloud)",
+        "podId": "pod-meridian--cloud-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 75
+          }
+        ]
+      },
+      {
+        "projectId": "proj-ai-voice-agents",
+        "projectName": "AI Voice Agents",
+        "podId": "pod-ai-voice-agents",
+        "sprintAllocations": [
+          {
+            "sprintId": "2610",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 20
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 20
+          }
+        ]
+      },
+      {
+        "projectId": "proj-enhancements--msd-",
+        "projectName": "Enhancements (MSD)",
+        "podId": "pod-enhancements--msd-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 25
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'anandi-rao',
-    name: 'Anandi Rao',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'covius', projectName: 'Covius Setup', podId: 'pod-letter-conv', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'mcdm', projectName: 'MCDM', podId: 'pod-gnma-hecm', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' },
-    ],
+    "id": "paul-mendoza",
+    "name": "Paul Mendoza",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-reliance-first-cap-integration",
+        "projectName": "Reliance First Cap Integration",
+        "podId": "pod-reliance-first-cap-integration",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 25
+          }
+        ]
+      },
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 75
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 75
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'bhavna-bhat',
-    name: 'Bhavna Bhat',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 70, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' },
-    ],
+    "id": "eric-schmidt",
+    "name": "Eric Schmidt",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-gnma-hecm",
+        "projectName": "GNMA HECM",
+        "podId": "pod-gnma-hecm",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 15
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 15
+          }
+        ]
+      },
+      {
+        "projectId": "proj-treasury-optimization",
+        "projectName": "Treasury Optimization",
+        "podId": "pod-treasury-optimization",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 25
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 25
+          }
+        ]
+      },
+      {
+        "projectId": "proj-enhancements--msd-",
+        "projectName": "Enhancements (MSD)",
+        "podId": "pod-enhancements--msd-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 50
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'dennis-grecu',
-    name: 'Dennis Grecu',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'genesys', projectName: 'Genesys', podId: 'pod-genesys-mgmt', percentage: 80, startDate: '2026-01-01', endDate: '2026-09-30' },
-      { projectId: 'genesys', projectName: 'Genesys', podId: 'pod-genesys-mgmt', percentage: 50, startDate: '2026-10-01', endDate: '2026-12-31' },
-      { projectId: 'sprint-letters', projectName: 'Sprint (Letters)', podId: 'pod-bench', percentage: 50, startDate: '2026-10-01', endDate: '2026-12-31' },
-    ],
+    "id": "rick-ritts",
+    "name": "Rick Ritts",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-meridian--cloud-",
+        "projectName": "Meridian (Cloud)",
+        "podId": "pod-meridian--cloud-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'eric-schmidt',
-    name: 'Eric Schmidt',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'gnma-hecm', projectName: 'GNMA HECM', podId: 'pod-gnma-hecm', percentage: 15, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'gnma-hecm', projectName: 'GNMA HECM', podId: 'pod-gnma-hecm', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "amir-hama",
+    "name": "Amir Hama",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-meridian--cloud-",
+        "projectName": "Meridian (Cloud)",
+        "podId": "pod-meridian--cloud-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'hunter-teston',
-    name: 'Hunter Teston',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'sprint-cx', projectName: 'Sprint (CX)', podId: 'pod-bench', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'sprint-cx', projectName: 'Sprint (CX)', podId: 'pod-bench', percentage: 20, startDate: '2026-07-01', endDate: '2026-12-31' },
-      { projectId: 'cdm-2.0', projectName: 'CDM 2.0 Migration', podId: 'pod-cdm-2', percentage: 80, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "andrew-hofmann",
+    "name": "Andrew Hofmann",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-meridian--cloud-",
+        "projectName": "Meridian (Cloud)",
+        "podId": "pod-meridian--cloud-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 50
+          }
+        ]
+      },
+      {
+        "projectId": "proj-enhancements--msd-",
+        "projectName": "Enhancements (MSD)",
+        "podId": "pod-enhancements--msd-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 50
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'jagdish-bishnoi',
-    name: 'Jagdish Bishnoi',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 80, startDate: '2026-01-01', endDate: '2026-09-30' },
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 0, startDate: '2026-10-01', endDate: '2026-12-31' },
-    ],
+    "id": "anandi-rao",
+    "name": "Anandi Rao",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-letter-conversion---print-vendor-implementation",
+        "projectName": "Letter Conversion & Print Vendor Implementation",
+        "podId": "pod-letter-conversion---print-vendor-implementation",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          }
+        ]
+      },
+      {
+        "projectId": "proj-letter-conversion---print-vendor-implementation",
+        "projectName": "Letter Conversion & Print Vendor Implementation",
+        "podId": "pod-letter-conversion---print-vendor-implementation",
+        "sprintAllocations": [
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'lamont-ford',
-    name: 'Lamont Ford',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "nick-miner",
+    "name": "Nick Miner",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-letter-conversion---print-vendor-implementation",
+        "projectName": "Letter Conversion & Print Vendor Implementation",
+        "podId": "pod-letter-conversion---print-vendor-implementation",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 70
+          }
+        ]
+      },
+      {
+        "projectId": "proj-letter-conversion---print-vendor-implementation",
+        "projectName": "Letter Conversion & Print Vendor Implementation",
+        "podId": "pod-letter-conversion---print-vendor-implementation",
+        "sprintAllocations": [
+          {
+            "sprintId": "2612",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 70
+          }
+        ]
+      },
+      {
+        "projectId": "proj-enhancements--letters-",
+        "projectName": "Enhancements (Letters)",
+        "podId": "pod-enhancements--letters-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 30
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'max-dedo',
-    name: 'Max Dedo',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'sprint-general', projectName: 'Sprint (General)', podId: 'pod-bench', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "stephanos-theodorou",
+    "name": "Stephanos Theodorou",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-ocr",
+        "projectName": "OCR",
+        "podId": "pod-ocr",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'naga-chadalawada',
-    name: 'Naga Chadalawada',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'cdm-2.0', projectName: 'CDM 2.0 Migration', podId: 'pod-cdm-2', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'cdm-2.0', projectName: 'CDM 2.0 Migration', podId: 'pod-cdm-2', percentage: 50, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "scott-mayer",
+    "name": "Scott Mayer",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-life-of-loan",
+        "projectName": "Life of Loan",
+        "podId": "pod-life-of-loan",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'nick-miner',
-    name: 'Nick Miner',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'covius', projectName: 'Covius Setup', podId: 'pod-letter-conv', percentage: 70, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'covius', projectName: 'Covius Setup', podId: 'pod-letter-conv', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' },
-    ],
+    "id": "bhavna-bhat",
+    "name": "Bhavna Bhat",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-enhancements--msd-",
+        "projectName": "Enhancements (MSD)",
+        "podId": "pod-enhancements--msd-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 30
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 30
+          }
+        ]
+      },
+      {
+        "projectId": "proj-production-support",
+        "projectName": "Production Support",
+        "podId": "pod-production-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 70
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 70
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'randy-huang',
-    name: 'Randy Huang',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'sprint-crm', projectName: 'Sprint (CRM)', podId: 'pod-bench', percentage: 80, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "max-dedo",
+    "name": "Max Dedo",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-enhancements--msd-",
+        "projectName": "Enhancements (MSD)",
+        "podId": "pod-enhancements--msd-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'randy-see',
-    name: 'Randy See',
-    department: 'APD',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'investor-portal', projectName: 'Investor Portal', podId: 'pod-servicing-enh', percentage: 75, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'investor-portal', projectName: 'Investor Portal', podId: 'pod-servicing-enh', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' },
-    ],
+    "id": "hunter-teston",
+    "name": "Hunter Teston",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-enhancements--cx-",
+        "projectName": "Enhancements (CX)",
+        "podId": "pod-enhancements--cx-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 90
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 90
+          }
+        ]
+      },
+      {
+        "projectId": "proj-ccm-support",
+        "projectName": "CCM Support",
+        "podId": "pod-ccm-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 10
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 10
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'rick-ritts',
-    name: 'Rick Ritts',
-    department: 'APS',
-    role: 'Contractor',
-    allocations: [
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 0, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "randy-huang",
+    "name": "Randy Huang",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-enhancements--crm-",
+        "projectName": "Enhancements (CRM)",
+        "podId": "pod-enhancements--crm-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'robert-weissenberg',
-    name: 'Robert Weissenberg',
-    department: 'APS',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 100, startDate: '2026-01-01', endDate: '2026-09-30' },
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 50, startDate: '2026-10-01', endDate: '2026-12-31' }
-    ],
+    "id": "adam-dean",
+    "name": "Adam Dean",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-ccm-support",
+        "projectName": "CCM Support",
+        "podId": "pod-ccm-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'scott-mayer',
-    name: 'Scott Mayer',
-    department: 'APS',
-    role: 'Imaging',
-    allocations: [
-      { projectId: 'imaging', projectName: 'Imaging Team', podId: 'pod-imaging', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "jagdish-bishnoi",
+    "name": "Jagdish Bishnoi",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-production-support",
+        "projectName": "Production Support",
+        "podId": "pod-production-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 50
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'shiva-bettegowda',
-    name: 'Shiva Bettegowda',
-    department: 'APS',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "lamont-ford",
+    "name": "Lamont Ford",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-production-support",
+        "projectName": "Production Support",
+        "podId": "pod-production-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'stephanos-theodorou',
-    name: 'Stephanos Theodorou',
-    department: 'APS',
-    role: 'Imaging',
-    allocations: [
-      { projectId: 'imaging', projectName: 'Imaging Team', podId: 'pod-imaging', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "robert-weissenberg",
+    "name": "Robert Weissenberg",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-production-support",
+        "projectName": "Production Support",
+        "podId": "pod-production-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'paul-mendoza',
-    name: 'Paul Mendoza',
-    department: 'APD',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'reliance', projectName: 'Reliance', podId: 'pod-reliance-int', percentage: 25, startDate: '2026-01-01', endDate: '2026-12-31' },
-      { projectId: 'dcr', projectName: 'Digital Change Request', podId: 'pod-digital-cr', percentage: 75, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "shiva-bettegowda",
+    "name": "Shiva Bettegowda",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-production-support",
+        "projectName": "Production Support",
+        "podId": "pod-production-support",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'sarah-jenkins',
-    name: 'Sarah Jenkins',
-    department: 'APD',
-    role: 'Product Manager',
-    allocations: [
-      { projectId: 'reliance', projectName: 'Reliance', podId: 'pod-reliance-int', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'dcr', projectName: 'Digital Change Request', podId: 'pod-digital-cr', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "zee-ansari",
+    "name": "Zee Ansari",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'michael-chen',
-    name: 'Michael Chen',
-    department: 'EDE',
-    role: 'Senior Developer',
-    allocations: [
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 50, startDate: '2026-01-01', endDate: '2026-12-31' },
-      { projectId: 'message-point', projectName: 'Message Point', podId: 'pod-letter-conv', percentage: 50, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "joshua-brewster",
+    "name": "Joshua Brewster",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'laura-wilson',
-    name: 'Laura Wilson',
-    department: 'APS',
-    role: 'QA Lead',
-    allocations: [
-      { projectId: 'genesys', projectName: 'Genesys', podId: 'pod-genesys-mgmt', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'investor-portal', projectName: 'Investor Portal', podId: 'pod-servicing-enh', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "nathan-garten",
+    "name": "Nathan Garten",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      },
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'david-miller',
-    name: 'David Miller',
-    department: 'EDE',
-    role: 'DevOps',
-    allocations: [
-      { projectId: 'gnma-hecm', projectName: 'GNMA HECM', podId: 'pod-gnma-hecm', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "aaron-robinson",
+    "name": "Aaron Robinson",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--lending-analytics-",
+        "projectName": "Business Intelligence (Lending Analytics)",
+        "podId": "pod-business-intelligence--lending-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'emily-davis',
-    name: 'Emily Davis',
-    department: 'APD',
-    role: 'Analyst',
-    allocations: [
-      { projectId: 'sprint-letters', projectName: 'Sprint (Letters)', podId: 'pod-bench', percentage: 100, startDate: '2026-01-01', endDate: '2026-06-30' },
-      { projectId: 'sprint-crm', projectName: 'Sprint (CRM)', podId: 'pod-bench', percentage: 100, startDate: '2026-07-01', endDate: '2026-12-31' }
-    ],
+    "id": "corey-walker",
+    "name": "Corey Walker",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'james-taylor',
-    name: 'James Taylor',
-    department: 'APS',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'performance', projectName: 'Performance Team', podId: 'pod-msd-maint', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "geoff-grant",
+    "name": "Geoff Grant",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'jessica-white',
-    name: 'Jessica White',
-    department: 'EDE',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'cdm-2.0', projectName: 'CDM 2.0 Migration', podId: 'pod-cdm-2', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "zane-searchwell",
+    "name": "Zane Searchwell",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'kevin-brown',
-    name: 'Kevin Brown',
-    department: 'APD',
-    role: 'QA',
-    allocations: [
-      { projectId: 'meridian', projectName: 'Project Meridian', podId: 'pod-meridian-js', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "mark-flores",
+    "name": "Mark Flores",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'olivia-garcia',
-    name: 'Olivia Garcia',
-    department: 'APS',
-    role: 'Developer',
-    allocations: [
-      { projectId: 'imaging', projectName: 'Imaging Team', podId: 'pod-imaging', percentage: 100, startDate: '2026-01-01', endDate: '2026-12-31' }
-    ],
+    "id": "manny-govea",
+    "name": "Manny Govea",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
   },
   {
-    id: 'res-sarah-chen',
-    name: 'Sarah Chen',
-    department: 'EDE',
-    role: 'Lead Architect',
-    allocations: [
-      { projectId: 'proj-cdm-2.0', projectName: 'CDM 2.0 Migration', podId: 'pod-cdm-2', percentage: 80, startDate: '2026-01-01', endDate: '2026-03-31' },
-      { projectId: 'proj-reliance', projectName: 'Reliance', podId: 'pod-reliance-int', percentage: 40, startDate: '2026-01-01', endDate: '2026-03-31' },
+    "id": "sherry-crocker",
+    "name": "Sherry Crocker",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nick-sung",
+    "name": "Nick Sung",
+    "department": "EDE",
+    "role": "Developer",
+    "allocations": [
+      {
+        "projectId": "proj-business-intelligence--servicing-analytics-",
+        "projectName": "Business Intelligence (Servicing Analytics)",
+        "podId": "pod-business-intelligence--servicing-analytics-",
+        "sprintAllocations": [
+          {
+            "sprintId": "2607",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2608",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2609",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2610",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2611",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2612",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2613",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2614",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2615",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2616",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2617",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2618",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2619",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2620",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2621",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2622",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2623",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2624",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2625",
+            "percentage": 100
+          },
+          {
+            "sprintId": "2626",
+            "percentage": 100
+          }
+        ]
+      }
     ]
   }
 ];

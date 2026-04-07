@@ -96,7 +96,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
 interface AllocationDetailsProps {
   resources: Resource[];
   pods: POD[];
-  onSave: (updatedResources: Resource[], updatedPods: POD[]) => void;
+  onSave: (updatedResources: Resource[], updatedPods: POD[]) => void | Promise<void>;
   onClose: () => void;
 }
 
@@ -146,13 +146,15 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
     startWidth.current = columnWidths[columnKey];
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
     e.preventDefault();
   };
 
   const handleMouseMove = (e: MouseEvent) => {
     if (resizingColumn.current) {
       const diff = e.clientX - startX.current;
-      const newWidth = Math.max(50, startWidth.current + diff);
+      const newWidth = Math.max(80, startWidth.current + diff);
       setColumnWidths(prev => ({
         ...prev,
         [resizingColumn.current!]: newWidth
@@ -164,6 +166,8 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
     resizingColumn.current = null;
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -197,9 +201,21 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
           const pod = pods.find(p => p.id === alloc.podId);
           const sprintMap: { [sprintId: string]: number } = {};
           
-          if (alloc.sprintAllocations) {
+          if (alloc.sprintAllocations && alloc.sprintAllocations.length > 0) {
             alloc.sprintAllocations.forEach(sa => {
-              sprintMap[sa.sprintId] = sa.percentage;
+              sprintMap[sa.sprintId] = sa.percentage || 0;
+            });
+          } else if (alloc.percentage !== undefined && alloc.startDate && alloc.endDate) {
+            // Fallback to legacy date-based logic: map percentage to all sprints in the date range
+            const aStart = new Date(alloc.startDate).getTime();
+            const aEnd = new Date(alloc.endDate).getTime();
+            
+            SPRINTS.forEach(s => {
+              const sStart = new Date(s.startDate).getTime();
+              const sEnd = new Date(s.endDate).getTime();
+              if (sStart <= aEnd && sEnd >= aStart) {
+                sprintMap[s.id] = alloc.percentage || 0;
+              }
             });
           }
 
@@ -443,7 +459,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
     reader.readAsText(file);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
     
     // Group rows by resourceId (or name if new)
@@ -472,71 +488,61 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
       }
     });
 
-    // Process PODs
-    const updatedPods = [...pods];
+    // Process PODs - Start fresh to ensure we only have what's in the grid
+    const updatedPods: POD[] = [];
     podMap.forEach((podData, key) => {
-      const existingIdx = updatedPods.findIndex(p => p.id === podData.id || p.name === podData.name);
-      if (existingIdx >= 0) {
-        updatedPods[existingIdx] = { ...updatedPods[existingIdx], ...podData };
-      } else if (podData.name) {
+      if (podData.name) {
         updatedPods.push({
-          id: `pod-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: podData.id || `pod-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
           name: podData.name,
           bu: podData.bu || 'IT',
           lead: podData.lead || '',
-          description: podData.description || '',
-          projects: []
+          description: podData.description || ''
         });
       }
     });
 
-    // Process Resources
-    const updatedResources = [...resources];
+    // Process Resources - Start fresh to ensure we only have what's in the grid
+    const updatedResources: Resource[] = [];
     resourceMap.forEach((resourceRows, key) => {
       const firstRow = resourceRows[0];
-      const existingIdx = updatedResources.findIndex(r => r.id === firstRow.resourceId || r.name === firstRow.resourceName);
       
-      const newAllocations: Allocation[] = resourceRows.map(row => {
-        const sprintAllocations: SprintAllocation[] = Object.entries(row.sprintAllocations)
-          .filter(([_, percentage]) => percentage > 0)
-          .map(([sprintId, percentage]) => ({ sprintId, percentage }));
+      const newAllocations: Allocation[] = resourceRows
+        .filter(row => row.podId !== 'pod-bench' && row.podName !== 'Bench / Available')
+        .map(row => {
+          const sprintAllocations: SprintAllocation[] = Object.entries(row.sprintAllocations)
+            .filter(([_, percentage]) => (percentage || 0) > 0)
+            .map(([sprintId, percentage]) => ({ sprintId, percentage: percentage || 0 }));
 
-        // Find the actual pod ID from our updated list
-        const actualPod = updatedPods.find(p => p.name === row.podName);
+          // Find the actual pod ID from our updated list
+          const actualPod = updatedPods.find(p => p.name === row.podName);
 
-        return {
-          projectId: row.podId || `proj-${Date.now()}`, // Ensure projectId is present
-          podId: actualPod?.id || row.podId,
-          projectName: row.podName,
-          sprintAllocations
-        };
-      });
-
-      if (existingIdx >= 0) {
-        updatedResources[existingIdx] = {
-          ...updatedResources[existingIdx],
-          name: firstRow.resourceName,
-          department: firstRow.department as any,
-          role: firstRow.role,
-          allocations: newAllocations
-        };
-      } else {
-        updatedResources.push({
-          id: `res-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          name: firstRow.resourceName,
-          department: firstRow.department as any,
-          role: firstRow.role,
-          allocations: newAllocations
+          return {
+            projectId: row.podId || `proj-${Date.now()}`,
+            podId: actualPod?.id || row.podId,
+            projectName: row.podName,
+            sprintAllocations
+          };
         });
-      }
+
+      updatedResources.push({
+        id: firstRow.resourceId || `res-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        name: firstRow.resourceName,
+        department: firstRow.department as any,
+        role: firstRow.role,
+        allocations: newAllocations
+      });
     });
 
-    setTimeout(() => {
-      onSave(updatedResources, updatedPods);
+    try {
+      await onSave(updatedResources, updatedPods);
       setIsSaving(false);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
-    }, 800);
+    } catch (error) {
+      console.error("Save error:", error);
+      setIsSaving(false);
+    }
   };
 
   // Group sprints by Quarter and Month for headers
@@ -649,6 +655,19 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
       {/* Grid Content */}
       <div className="flex-1 overflow-auto">
         <table className="w-full border-collapse table-fixed min-w-[2600px]">
+          <colgroup>
+            <col style={{ width: '60px' }} />
+            <col style={{ width: columnWidths.resourceName }} />
+            <col style={{ width: columnWidths.department }} />
+            <col style={{ width: columnWidths.role }} />
+            <col style={{ width: columnWidths.podBU }} />
+            <col style={{ width: columnWidths.podName }} />
+            <col style={{ width: columnWidths.podLead }} />
+            <col style={{ width: columnWidths.podDescription }} />
+            {sprintHeaders.map(q => q.months.map(m => m.sprints.map(s => (
+              <col key={s.id} style={{ width: '60px' }} />
+            )))).flat().flat()}
+          </colgroup>
           <thead className="sticky top-0 z-20 bg-white shadow-sm">
             {/* Quarter Header */}
             <tr className="bg-slate-800 text-white border-b border-slate-700">
@@ -698,7 +717,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
                   </div>
                   <div 
                     onMouseDown={(e) => handleMouseDown(e, col.key)}
-                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400 transition-colors z-10"
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-indigo-500 group-hover:bg-slate-300 transition-colors z-10 border-r border-transparent hover:border-indigo-600"
                   />
                 </th>
               ))}
@@ -708,7 +727,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
                   </div>
                   <div 
                     onMouseDown={(e) => handleMouseDown(e, 'podBU')}
-                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400 transition-colors z-10"
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-indigo-500 group-hover:bg-slate-300 transition-colors z-10 border-r border-transparent hover:border-indigo-600"
                   />
                 </th>
                 <th style={{ width: columnWidths.podName }} className="px-4 py-3 text-left text-[10px] font-bold uppercase text-slate-500 border-r border-slate-200 relative group">
@@ -717,7 +736,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
                   </div>
                   <div 
                     onMouseDown={(e) => handleMouseDown(e, 'podName')}
-                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400 transition-colors z-10"
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-indigo-500 group-hover:bg-slate-300 transition-colors z-10 border-r border-transparent hover:border-indigo-600"
                   />
                 </th>
                 <th style={{ width: columnWidths.podLead }} className="px-4 py-3 text-left text-[10px] font-bold uppercase text-slate-500 border-r border-slate-200 relative group">
@@ -726,7 +745,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
                   </div>
                   <div 
                     onMouseDown={(e) => handleMouseDown(e, 'podLead')}
-                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400 transition-colors z-10"
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-indigo-500 group-hover:bg-slate-300 transition-colors z-10 border-r border-transparent hover:border-indigo-600"
                   />
                 </th>
                 <th style={{ width: columnWidths.podDescription }} className="px-4 py-3 text-left text-[10px] font-bold uppercase text-slate-500 border-r border-slate-200 relative group">
@@ -735,7 +754,7 @@ export const AllocationDetails: React.FC<AllocationDetailsProps> = ({
                   </div>
                   <div 
                     onMouseDown={(e) => handleMouseDown(e, 'podDescription')}
-                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400 transition-colors z-10"
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-indigo-500 group-hover:bg-slate-300 transition-colors z-10 border-r border-transparent hover:border-indigo-600"
                   />
                 </th>
               {sprintHeaders.map(q => q.months.map(m => m.sprints.map(s => (
