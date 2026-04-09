@@ -155,7 +155,7 @@ export default function App() {
   const downloadTemplate = () => {
     // Include all sprints for the planning horizon
     const planningSprints = SPRINTS.filter(s => 
-      ['2026-Q2', '2026-Q3', '2026-Q4', '2027-Q1'].includes(s.quarter)
+      QUARTERS.some(q => q.id === s.quarter)
     ).map(s => s.id);
 
     const headers = [
@@ -327,7 +327,7 @@ export default function App() {
     if (quarters.length === 0) return 0;
     
     const totalAlloc = quarters.reduce((qAcc, quarter) => {
-      // Get all sprints belonging to this quarter's ID (e.g. 2026-Q1)
+      // Get all sprints belonging to this quarter's ID (e.g. 2026-Q2)
       const qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
       
       const qAlloc = resource.allocations.reduce((acc, alloc) => {
