@@ -58,6 +58,7 @@ function cn(...inputs: ClassValue[]) {
 export default function App() {
   const [view, setView] = useState<'pod' | 'department' | 'resource' | 'allocation-details'>('pod');
   const [selectedQuarterIds, setSelectedQuarterIds] = useState<string[]>(['2026-Q2', '2026-Q3', '2026-Q4']);
+  const [selectedSprintIds, setSelectedSprintIds] = useState<string[]>([]);
   const [selectedBU, setSelectedBU] = useState<string>('All');
   
   // Dynamic Data State
@@ -122,6 +123,14 @@ export default function App() {
     return pods.filter(p => p.bu === selectedBU);
   }, [pods, selectedBU]);
 
+  const allDepartments = useMemo(() => {
+    return Array.from(new Set(resources.map(r => r.department))).sort();
+  }, [resources]);
+
+  const prioritizedDepts = ['EDE', 'APD', 'APS'];
+  const otherDepts = allDepartments.filter(d => !prioritizedDepts.includes(d));
+  const displayDepts = [...prioritizedDepts, ...otherDepts];
+
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
   const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
@@ -149,6 +158,17 @@ export default function App() {
 
   const selectedQuarters = useMemo(() => {
     return QUARTERS.filter(q => selectedQuarterIds.includes(q.id));
+  }, [selectedQuarterIds]);
+
+  // Sync selectedSprintIds when a single quarter is selected
+  useEffect(() => {
+    if (selectedQuarterIds.length === 1) {
+      const quarterId = selectedQuarterIds[0];
+      const quarterSprints = SPRINTS.filter(s => s.quarter === quarterId).map(s => s.id);
+      setSelectedSprintIds(quarterSprints);
+    } else {
+      setSelectedSprintIds([]);
+    }
   }, [selectedQuarterIds]);
 
   // Template Download Logic
@@ -328,7 +348,12 @@ export default function App() {
     
     const totalAlloc = quarters.reduce((qAcc, quarter) => {
       // Get all sprints belonging to this quarter's ID (e.g. 2026-Q2)
-      const qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
+      let qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
+      
+      // If only one quarter is selected, respect the sprint drill-down
+      if (selectedQuarterIds.length === 1 && selectedSprintIds.length > 0) {
+        qSprints = qSprints.filter(s => selectedSprintIds.includes(s.id));
+      }
       
       const qAlloc = resource.allocations.reduce((acc, alloc) => {
         if (alloc.sprintAllocations && alloc.sprintAllocations.length > 0) {
@@ -407,7 +432,13 @@ export default function App() {
 
           // Calculate average allocation for these relevant projects across selected quarters
           const avgAlloc = selectedQuarters.length === 0 ? 0 : selectedQuarters.reduce((qAcc, quarter) => {
-            const qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
+            let qSprints = SPRINTS.filter(s => s.quarter === quarter.id);
+            
+            // If only one quarter is selected, respect the sprint drill-down
+            if (selectedQuarterIds.length === 1 && selectedSprintIds.length > 0) {
+              qSprints = qSprints.filter(s => selectedSprintIds.includes(s.id));
+            }
+
             const qStart = new Date(quarter.startDate).getTime();
             const qEnd = new Date(quarter.endDate).getTime();
             
@@ -443,7 +474,7 @@ export default function App() {
         hasRisk: hasOverAllocatedResource
       };
     });
-  }, [selectedQuarters, filteredPods, resources]);
+  }, [selectedQuarters, selectedSprintIds, selectedQuarterIds, filteredPods, resources]);
 
   // Calculate Bench Strength for selected period
   const benchStrength = useMemo(() => {
@@ -462,7 +493,7 @@ export default function App() {
       benchFTE: isNaN(benchFTE) ? 0 : parseFloat(benchFTE.toFixed(1)),
       benchPct: isNaN(benchPct) ? 0 : Math.round(benchPct)
     };
-  }, [selectedQuarters, filteredResources]);
+  }, [selectedQuarters, selectedSprintIds, selectedQuarterIds, filteredResources]);
 
   // Trend data for bench strength across all quarters with team breakdowns
   const trendData = useMemo(() => {
@@ -471,7 +502,12 @@ export default function App() {
         const teamResources = team ? filteredResources.filter(r => r.department === team) : filteredResources;
         const totalHeadcount = teamResources.length;
         const totalAllocatedFTE = teamResources.reduce((acc, r) => {
-          const qSprints = SPRINTS.filter(s => s.quarter === q.id);
+          let qSprints = SPRINTS.filter(s => s.quarter === q.id);
+          
+          // If only one quarter is selected, respect the sprint drill-down for that specific quarter in the trend
+          if (selectedQuarterIds.length === 1 && selectedQuarterIds[0] === q.id && selectedSprintIds.length > 0) {
+            qSprints = qSprints.filter(s => selectedSprintIds.includes(s.id));
+          }
           
           const alloc = r.allocations.reduce((aAcc, a) => {
             if (a.sprintAllocations && a.sprintAllocations.length > 0) {
@@ -494,15 +530,18 @@ export default function App() {
         return isNaN(result) ? 0 : result;
       };
 
-      return {
+      const result: any = {
         name: q.name,
         all: calculateBench(),
-        ede: calculateBench('EDE'),
-        apd: calculateBench('APD'),
-        aps: calculateBench('APS'),
       };
+
+      allDepartments.forEach(dept => {
+        result[dept.toLowerCase()] = calculateBench(dept);
+      });
+
+      return result;
     });
-  }, [filteredResources]);
+  }, [filteredResources, selectedQuarterIds, selectedSprintIds, allDepartments]);
 
   // Departmental Data for selected period
   const deptData = useMemo(() => {
@@ -523,7 +562,7 @@ export default function App() {
         utilization: totalFTE > 0 ? Math.round(((isNaN(allocatedFTE) ? 0 : allocatedFTE) / totalFTE) * 100) : 0
       };
     });
-  }, [selectedQuarters, resources]);
+  }, [selectedQuarters, selectedSprintIds, selectedQuarterIds, resources]);
 
   // Calculate per-team averages for the selected period
   const teamBenchMetrics = useMemo(() => {
@@ -539,8 +578,13 @@ export default function App() {
       
       // Find the best quarter for this team specifically
       const bestQuarter = selectedQuarters.map(q => {
-        const qSprints = SPRINTS.filter(s => s.quarter === q.id);
+        let qSprints = SPRINTS.filter(s => s.quarter === q.id);
         
+        // If only one quarter is selected, respect the sprint drill-down
+        if (selectedQuarterIds.length === 1 && selectedQuarterIds[0] === q.id && selectedSprintIds.length > 0) {
+          qSprints = qSprints.filter(s => selectedSprintIds.includes(s.id));
+        }
+
         const qAlloc = teamResources.reduce((acc, r) => {
           const rAlloc = r.allocations.reduce((aAcc, a) => {
             if (a.sprintAllocations && a.sprintAllocations.length > 0) {
@@ -570,7 +614,7 @@ export default function App() {
         bestQuarterBench: bestQuarter ? parseFloat((isNaN(bestQuarter.bench) ? 0 : bestQuarter.bench).toFixed(1)) : 0
       };
     });
-  }, [selectedQuarters, resources]);
+  }, [selectedQuarters, selectedSprintIds, selectedQuarterIds, resources]);
 
   const topCapacityTeam = useMemo(() => 
     teamBenchMetrics.length > 0 ? [...teamBenchMetrics].sort((a, b) => b.avgBenchFte - a.avgBenchFte)[0] : null
@@ -589,12 +633,20 @@ export default function App() {
       }))
       .filter(r => r.allocated !== 100) // Show both under-allocated (bench) and over-allocated
       .sort((a, b) => a.allocated - b.allocated);
-  }, [resources, selectedQuarters, selectedPeriodLabel]);
+  }, [resources, selectedQuarters, selectedSprintIds, selectedQuarterIds, selectedPeriodLabel]);
 
   const toggleQuarter = (id: string) => {
     setSelectedQuarterIds(prev => 
       prev.includes(id) 
         ? prev.filter(qId => qId !== id) 
+        : [...prev, id]
+    );
+  };
+
+  const toggleSprint = (id: string) => {
+    setSelectedSprintIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(sId => sId !== id) 
         : [...prev, id]
     );
   };
@@ -729,11 +781,23 @@ export default function App() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <TrendChart dataKey="all" title="Bench Strength (ALL IT)" color="#6366f1" />
-          <TrendChart dataKey="ede" title="Bench Strength EDE" color="#0ea5e9" />
-          <TrendChart dataKey="apd" title="Bench Strength APD" color="#8b5cf6" />
-          <TrendChart dataKey="aps" title="Bench Strength APS" color="#f59e0b" />
+        <div className="flex overflow-x-auto pb-4 gap-6 no-scrollbar snap-x">
+          <div className="min-w-[300px] flex-shrink-0 snap-start">
+            <TrendChart dataKey="all" title="Bench Strength (ALL IT)" color="#6366f1" />
+          </div>
+          {displayDepts.map((dept, index) => {
+            const colors = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#10b981", "#f43f5e", "#84cc16", "#ec4899"];
+            const color = colors[index % colors.length];
+            return (
+              <div key={dept} className="min-w-[300px] flex-shrink-0 snap-start">
+                <TrendChart 
+                  dataKey={dept.toLowerCase()} 
+                  title={`Bench Strength ${dept}`} 
+                  color={color} 
+                />
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -791,6 +855,61 @@ export default function App() {
             </div>
           </div>
         </div>
+
+        {/* Sprint Drill-down UI */}
+        {selectedQuarterIds.length === 1 && (
+          <div className="mt-4 bg-white rounded-2xl border border-indigo-100 p-6 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500" />
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+                  <Activity size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-800">Sprint Drill-down: {selectedQuarters[0]?.name}</h3>
+                  <p className="text-[10px] text-slate-400 font-medium tracking-wide">Refining analysis for specific sprints within this quarter.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="flex bg-slate-100 p-1 rounded-lg">
+                  <button 
+                    onClick={() => {
+                      const qSprints = SPRINTS.filter(s => s.quarter === selectedQuarterIds[0]).map(s => s.id);
+                      setSelectedSprintIds(qSprints);
+                    }}
+                    className="px-2 py-1 text-[9px] font-black uppercase text-slate-500 hover:text-slate-800 transition-colors"
+                  >
+                    All
+                  </button>
+                  <button 
+                    onClick={() => setSelectedSprintIds([])}
+                    className="px-2 py-1 text-[9px] font-black uppercase text-slate-500 hover:text-slate-800 transition-colors"
+                  >
+                    None
+                  </button>
+                </div>
+                
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {SPRINTS.filter(s => s.quarter === selectedQuarterIds[0]).map(s => (
+                    <button
+                      key={s.id}
+                      onClick={() => toggleSprint(s.id)}
+                      className={cn(
+                        "px-4 py-2 rounded-xl text-xs font-bold transition-all border",
+                        selectedSprintIds.includes(s.id)
+                          ? "bg-indigo-500 text-white border-indigo-500 shadow-sm"
+                          : "bg-white text-slate-500 border-slate-200 hover:border-indigo-300 hover:text-indigo-600"
+                      )}
+                    >
+                      {s.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Main Content Split Layout */}
