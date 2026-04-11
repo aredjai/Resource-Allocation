@@ -26,7 +26,7 @@ export function ResourceManagement({ resources, pods, onSave, onClose }: Resourc
     }[];
   }>({
     name: '',
-    department: 'EDE',
+    department: 'Other',
     role: '',
     allocations: [{ projectName: '', quarterName: QUARTERS[0].name, sprintAllocations: {} }]
   });
@@ -196,7 +196,7 @@ export function ResourceManagement({ resources, pods, onSave, onClose }: Resourc
     setEditingResourceId(null);
     setFormData({
       name: '',
-      department: 'EDE',
+      department: 'Other',
       role: '',
       allocations: [{ projectName: '', quarterName: QUARTERS[0].name, sprintAllocations: {} }]
     });
@@ -223,6 +223,12 @@ export function ResourceManagement({ resources, pods, onSave, onClose }: Resourc
     });
     return Array.from(names).sort();
   }, [pods, resources]);
+
+  const allDepartments = useMemo(() => {
+    const depts = new Set<string>(['EDE', 'APD', 'APS', 'Other']);
+    resources.forEach(r => depts.add(r.department));
+    return Array.from(depts).sort();
+  }, [resources]);
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -263,9 +269,9 @@ export function ResourceManagement({ resources, pods, onSave, onClose }: Resourc
                   onChange={e => setFormData(prev => ({ ...prev, department: e.target.value }))}
                   className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all bg-white font-bold text-slate-700 appearance-none"
                 >
-                  <option value="EDE">EDE</option>
-                  <option value="APD">APD</option>
-                  <option value="APS">APS</option>
+                  {allDepartments.map(dept => (
+                    <option key={dept} value={dept}>{dept}</option>
+                  ))}
                 </select>
               </div>
               <div className="md:col-span-3 space-y-1.5">

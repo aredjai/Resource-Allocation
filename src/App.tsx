@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   BarChart,
   Bar,
@@ -32,6 +32,7 @@ import {
   AlertCircle, 
   CheckCircle2, 
   ChevronRight,
+  ChevronLeft,
   TrendingUp,
   PieChart as PieChartIcon,
   Layers,
@@ -67,6 +68,17 @@ export default function App() {
   const [isUploading, setIsUploading] = useState(false);
   const [isPodSetupOpen, setIsPodSetupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const trendScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollTrend = (direction: 'left' | 'right') => {
+    if (trendScrollRef.current) {
+      const scrollAmount = 350;
+      trendScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // Load data from Supabase on mount
   useEffect(() => {
@@ -246,7 +258,7 @@ export default function App() {
         const newPodsMap = new Map<string, POD>();
         data.forEach(row => {
           const podName = row['POD Name'];
-          const bu = row['POD BU'] as any;
+          const bu = (row['POD BU'] || row['BU']) as any;
           if (podName && !newPodsMap.has(podName)) {
             newPodsMap.set(podName, {
               id: `pod-${podName.toLowerCase().replace(/\s+/g, '-')}`,
@@ -274,8 +286,8 @@ export default function App() {
             resourcesMap.set(resName, {
               id: `res-${resName.toLowerCase().replace(/\s+/g, '-')}`,
               name: resName,
-              department: row['Resource Department'] || 'Other',
-              role: row['Resource Role'] || 'Contributor',
+              department: row['Resource Department'] || row['Team'] || row['Department'] || 'Other',
+              role: row['Resource Role'] || row['Role'] || 'Contributor',
               allocations: []
             });
           }
@@ -545,8 +557,7 @@ export default function App() {
 
   // Departmental Data for selected period
   const deptData = useMemo(() => {
-    const departments = ['EDE', 'APD', 'APS'];
-    return departments.map(dept => {
+    return displayDepts.map(dept => {
       const deptResources = resources.filter(r => r.department === dept);
       const totalFTE = deptResources.length;
       const allocatedFTE = deptResources.reduce((acc, r) => {
@@ -566,10 +577,9 @@ export default function App() {
 
   // Calculate per-team averages for the selected period
   const teamBenchMetrics = useMemo(() => {
-    const teams = ['EDE', 'APD', 'APS'];
     if (selectedQuarters.length === 0) return [];
     
-    return teams.map(teamName => {
+    return displayDepts.map(teamName => {
       const teamResources = resources.filter(r => r.department === teamName);
       const totalHeadcount = teamResources.length;
       const allocatedFTE = getResourceAllocationInPeriod({ allocations: teamResources.flatMap(r => r.allocations) } as any, selectedQuarters);
@@ -781,23 +791,45 @@ export default function App() {
             </div>
           </div>
         </div>
-        <div className="flex overflow-x-auto pb-4 gap-6 no-scrollbar snap-x">
-          <div className="min-w-[300px] flex-shrink-0 snap-start">
-            <TrendChart dataKey="all" title="Bench Strength (ALL IT)" color="#6366f1" />
+        <div className="relative group">
+          {/* Scroll Controls */}
+          <button 
+            onClick={() => scrollTrend('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 bg-white rounded-full border border-slate-200 shadow-lg flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:border-indigo-200 transition-all opacity-40 hover:opacity-100 focus:opacity-100"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          
+          <button 
+            onClick={() => scrollTrend('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 bg-white rounded-full border border-slate-200 shadow-lg flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:border-indigo-200 transition-all opacity-40 hover:opacity-100 focus:opacity-100"
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          <div 
+            ref={trendScrollRef}
+            className="flex overflow-x-auto pb-4 gap-6 no-scrollbar snap-x scroll-smooth"
+          >
+            <div className="min-w-[300px] flex-shrink-0 snap-start">
+              <TrendChart dataKey="all" title="Bench Strength (ALL IT)" color="#6366f1" />
+            </div>
+            {displayDepts.map((dept, index) => {
+              const colors = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#10b981", "#f43f5e", "#84cc16", "#ec4899"];
+              const color = colors[index % colors.length];
+              return (
+                <div key={dept} className="min-w-[300px] flex-shrink-0 snap-start">
+                  <TrendChart 
+                    dataKey={dept.toLowerCase()} 
+                    title={`Bench Strength ${dept}`} 
+                    color={color} 
+                  />
+                </div>
+              );
+            })}
           </div>
-          {displayDepts.map((dept, index) => {
-            const colors = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#10b981", "#f43f5e", "#84cc16", "#ec4899"];
-            const color = colors[index % colors.length];
-            return (
-              <div key={dept} className="min-w-[300px] flex-shrink-0 snap-start">
-                <TrendChart 
-                  dataKey={dept.toLowerCase()} 
-                  title={`Bench Strength ${dept}`} 
-                  color={color} 
-                />
-              </div>
-            );
-          })}
         </div>
       </section>
 
